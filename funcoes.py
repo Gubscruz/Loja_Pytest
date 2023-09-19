@@ -1,11 +1,11 @@
-from flask import Flask, request
-from db_utils import Sql
+import sqlite3 as sql
 
-app = Flask('Loja')
-db = Sql()
+conn = sql.connect('./db/e_magic_shop_v2.db')
+cursor = conn.cursor()
+
 
 def cadastra_usuario(nome, idade, cpf, endereco, email):
-    if 0<int(idade)<120:
+    if 0>idade or 120<idade:
         return False
     
     if len(cpf) != 11:
@@ -15,6 +15,7 @@ def cadastra_usuario(nome, idade, cpf, endereco, email):
     if email[:pos] == '' or email[pos+1:] == '':
         return False
     
-    data = (nome, idade, cpf, endereco, email)
-    
-    return db.insert('Usuarios', ('nome','idade','cpf','endereco','email'), '?,?,?,?,?', data), 'Yes'
+    else:
+        data = (nome, idade, cpf, endereco, email)
+        cursor.execute(('INSERT INTO Usuarios (nome,idade,cpf,endereco,email) VALUES (?,?,?,?,?)'), data)
+        return 201
