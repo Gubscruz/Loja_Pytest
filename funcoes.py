@@ -34,3 +34,10 @@ def encontra_usuario(id):
     except:
         return False
     return user
+
+
+def lista_usuarios():
+    cursor.execute('SELECT * FROM Usuarios')
+    usuarios = cursor.fetchall()
+
+    return usuarios
