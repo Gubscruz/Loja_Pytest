@@ -6,6 +6,10 @@ cursor = conn.cursor()
 
 
 def cadastra_usuario(nome, idade, cpf, endereco, email):
+
+    if not isinstance(idade, int):
+        return False
+
     if 0>idade or 120<idade:
         return False
     

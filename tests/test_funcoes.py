@@ -23,6 +23,10 @@ def test_email_string_depois():
 def test_cadastro_valido():
     assert cadastra_usuario('Mario',10,'01234567890','Rua Quata','email@gmail.com') == 201
 
+@pytest.mark.usuarios
+def test_cadastro_idade_str():
+    assert cadastra_usuario('Mario','5','01234567890','Rua Quata','email@gmail.com') == False
+
 
 # acha usuario
 @pytest.mark.usuarios
