@@ -23,6 +23,7 @@ def cadastra_usuario(nome, idade, cpf, endereco, email):
     else:
         data = (nome, idade, cpf, endereco, email)
         cursor.execute(('INSERT INTO Usuarios (nome,idade,cpf,endereco,email) VALUES (?,?,?,?,?)'), data)
+        conn.commit()
         return 201
         
 
@@ -35,13 +36,15 @@ def encontra_usuario(id):
         user = usuarios[id-1]
     except:
         return False
-    return user
+    conn.commit()
+    return 200
 
 
 def lista_usuarios():
     cursor.execute('SELECT * FROM Usuarios')
     usuarios = cursor.fetchall()
-    return usuarios
+    conn.commit()
+    return 200
 
 
 def atualiza_usuario(nome,idade,cpf,endereco,email,id):
@@ -60,5 +63,14 @@ def atualiza_usuario(nome,idade,cpf,endereco,email,id):
     elif cursor.fetchone() == None:
         return False
     cursor.execute('UPDATE Usuarios SET nome=?, idade=?, cpf=?, endereco=?, email=? WHERE id=?', data)
+    conn.commit()
     return 201
 
+
+def deleta_usuario(id):
+    cursor.execute('SELECT * FROM Usuarios WHERE id=?', (id,))
+    if cursor.fetchone() == None:
+        return False
+
+    cursor.execute('DELETE FROM Usuarios WHERE id=?', (id,))
+    return 200

@@ -39,13 +39,13 @@ def test_id_negativo():
 
 @pytest.mark.usuarios
 def test_encontra_id():
-    assert encontra_usuario(2) == (2, 'Bob', 35, '23456789012', 'Rua dos Construtores, 5', 'bob@builder.com')
+    assert encontra_usuario(2) == 200
 
 
 # lista todos usuarios
 @pytest.mark.usuarios
 def test_lista_todos_usuarios():
-    assert lista_usuarios() == [(1, 'Alice', 28, '12345678901', 'Rua das Maravilhas, 10', 'alice@wonderland.com'), (2, 'Bob', 35, '23456789012', 'Rua dos Construtores, 5', 'bob@builder.com'), (3, 'Charlie', 40, '34567890123', 'Praça dos Chocolate, 7', 'charlie@chocolate.com'), (4, 'Diana', 29, '45678901234', 'Avenida das Caçadoras, 15', 'diana@amazon.com'), (5, 'Eduardo', 50, '56789012345', 'Beco dos Economistas, 20', 'ed@economy.com'), (6, 'Mario', 10, '01234567890', 'Rua Quata', 'email@gmail.com')]
+    assert lista_usuarios() == 200
 
 
 # atualiza usuarios
@@ -72,3 +72,7 @@ def test_atualiza_email_string_depois():
 @pytest.mark.usuarios
 def test_atualiza_cadastro_valido():
     assert atualiza_usuario('Mario',10,'01234567890','Rua Quata','email@gmail.com',2) == 201
+
+@pytest.mark.usuarios
+def test_deleta_usuario():
+    assert deleta_usuario(1) == 200
