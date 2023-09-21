@@ -20,15 +20,13 @@ def cadastra_usuario(nome, idade, cpf, endereco, email):
         data = (nome, idade, cpf, endereco, email)
         cursor.execute(('INSERT INTO Usuarios (nome,idade,cpf,endereco,email) VALUES (?,?,?,?,?)'), data)
         return 201
-    
+        
 
 def encontra_usuario(id):
     cursor.execute('SELECT * FROM Usuarios')
     usuarios = cursor.fetchall()
-
     if id<0:
         return False
-
     try:
         user = usuarios[id-1]
     except:
@@ -39,5 +37,15 @@ def encontra_usuario(id):
 def lista_usuarios():
     cursor.execute('SELECT * FROM Usuarios')
     usuarios = cursor.fetchall()
-
     return usuarios
+
+
+def atualiza_usuario(nome,idade,cpf,endereco,email,id):
+    cursor.execute('SELECT * FROM Usuarios WHERE id=?', (id,))
+    data = (nome, idade, cpf, endereco, email, id)
+    if cursor.fetchone() == None:
+        return False
+    cursor.execute('UPDATE Usuarios SET nome=?, idade=?, cpf=?, endereco=?, email=? WHERE id=?', data)
+    return True
+
+
