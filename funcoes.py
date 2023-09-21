@@ -6,27 +6,21 @@ cursor = conn.cursor()
 
 
 def cadastra_usuario(nome, idade, cpf, endereco, email):
-
     if not isinstance(idade, int):
         return False
-
     if 0>idade or 120<idade:
         return False
-    
     if len(cpf) != 11:
         return False
-    
     pos = email.find('@')
     if email[:pos] == '' or email[pos+1:] == '':
         return False
-    
     else:
         data = (nome, idade, cpf, endereco, email)
         cursor.execute(('INSERT INTO Usuarios (nome,idade,cpf,endereco,email) VALUES (?,?,?,?,?)'), data)
         conn.commit()
         return 201
         
-
 def encontra_usuario(id):
     cursor.execute('SELECT * FROM Usuarios')
     usuarios = cursor.fetchall()
@@ -36,9 +30,7 @@ def encontra_usuario(id):
         user = usuarios[id-1]
     except:
         return False
-    conn.commit()
     return 200
-
 
 def lista_usuarios():
     cursor.execute('SELECT * FROM Usuarios')
@@ -46,26 +38,21 @@ def lista_usuarios():
     conn.commit()
     return 200
 
-
 def atualiza_usuario(nome,idade,cpf,endereco,email,id):
     cursor.execute('SELECT * FROM Usuarios WHERE id=?', (id,))
     data = (nome, idade, cpf, endereco, email, id)
     if 0>idade or 120<idade:
-        return False
-    
+        return False    
     if len(cpf) != 11:
         return False
-    
     pos = email.find('@')
     if email[:pos] == '' or email[pos+1:] == '':
         return False
-
     elif cursor.fetchone() == None:
         return False
     cursor.execute('UPDATE Usuarios SET nome=?, idade=?, cpf=?, endereco=?, email=? WHERE id=?', data)
     conn.commit()
     return 201
-
 
 def deleta_usuario(id):
     cursor.execute('SELECT * FROM Usuarios WHERE id=?', (id,))
@@ -74,3 +61,24 @@ def deleta_usuario(id):
 
     cursor.execute('DELETE FROM Usuarios WHERE id=?', (id,))
     return 200
+
+
+
+
+def cadastra_produto(nome,descricao,categoria,preco,estoque):
+    data = (nome,descricao,categoria,preco,estoque)
+    if not isinstance(preco, (int,float)):
+        return False
+    if not isinstance(estoque, int):
+        return False
+    if preco<0:
+        return False
+    if estoque<0:
+        return False
+    if categoria not in ['Magia', 'Eletrônicos']:
+        return False
+    
+    cursor.execute('INSERT INTO Produtos (nome,descricao,categoria,preco,estoque) VALUES (?,?,?,?,?)', data)
+    conn.commit()
+    return 200
+

@@ -76,3 +76,21 @@ def test_atualiza_cadastro_valido():
 @pytest.mark.usuarios
 def test_deleta_usuario():
     assert deleta_usuario(1) == 200
+
+
+
+@pytest.mark.produtos
+def test_preco_negativo():
+    assert cadastra_produto('Apple M1','Processador com arquitetura ARM-64x','Eletrônicos',-10,8) == False
+
+@pytest.mark.produtos
+def test_estoque_negativo():
+    assert cadastra_produto('Apple M1','Processador com arquitetura ARM-64x','Eletrônicos',4200,-10) == False
+
+@pytest.mark.produtos
+def test_categoria_inexistente():
+    assert cadastra_produto('Apple M1','Processador com arquitetura ARM-64x','Macaco',4200,8) == False
+
+@pytest.mark.produtos
+def test_lista_produtos():
+    assert cadastra_produto('Apple M1','Processador com arquitetura ARM-64x','Eletrônicos',4200,8) == 200
