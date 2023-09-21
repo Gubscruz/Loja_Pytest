@@ -94,3 +94,43 @@ def test_categoria_inexistente():
 @pytest.mark.produtos
 def test_lista_produtos():
     assert cadastra_produto('Apple M1','Processador com arquitetura ARM-64x','Eletrônicos',4200,8) == 200
+
+@pytest.mark.produtos
+def test_encontra_produto():
+    assert encontra_produto(1) == 200
+
+@pytest.mark.produtos
+def test_encontra_produto_id_negativo():
+    assert encontra_produto(-1) == False
+
+@pytest.mark.produtos
+def test_encontra_produto_id_out_of_range():
+    assert encontra_produto(100) == False
+
+@pytest.mark.produtos
+def test_atualiza_produto():
+    assert atualiza_produto('Apple M1','Processador com arquitetura ARM-64x','Eletrônicos',4200,8,1) == 200
+
+@pytest.mark.produtos
+def test_atualiza_produto_preco_negativo():
+    assert atualiza_produto('Apple M1','Processador com arquitetura ARM-64x','Eletrônicos',-4200,8,1) == False
+
+@pytest.mark.produtos
+def test_atualiza_produto_estoque_negativo():
+    assert atualiza_produto('Apple M1','Processador com arquitetura ARM-64x','Eletrônicos',4200,-8,1) == False
+
+@pytest.mark.produtos
+def test_atualiza_produto_categoria_inexistente():
+    assert atualiza_produto('Apple M1','Processador com arquitetura ARM-64x','Macaco',4200,8,1) == False
+
+@pytest.mark.produtos
+def test_atualiza_produto_id_negativo():
+    assert atualiza_produto('Apple M1','Processador com arquitetura ARM-64x','Eletrônicos',4200,8,-1) == False
+
+@pytest.mark.produtos
+def test_delete_produto():
+    assert deleta_produto(1) == 200
+
+@pytest.mark.produtos
+def test_delete_produto_id_negativo():
+    assert deleta_produto(-1) == False

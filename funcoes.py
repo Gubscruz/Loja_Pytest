@@ -82,3 +82,46 @@ def cadastra_produto(nome,descricao,categoria,preco,estoque):
     conn.commit()
     return 200
 
+def lista_produtos():
+    cursor.execute('SELECT * FROM Produtos')
+    produtos = cursor.fetchall()
+    conn.commit()
+    return 200
+
+def encontra_produto(id):
+    cursor.execute('SELECT * FROM Produtos')
+    produtos = cursor.fetchall()
+    if id<0:
+        return False
+    try:
+        produto = produtos[id-1]
+    except:
+        return False
+    return 200
+
+def atualiza_produto(nome,descricao,categoria,preco,estoque,id):
+    cursor.execute('SELECT * FROM Produtos WHERE id=?', (id,))
+    data = (nome,descricao,categoria,preco,estoque,id)
+    if not isinstance(preco, (int,float)):
+        return False
+    if not isinstance(estoque, int):
+        return False
+    if preco<0:
+        return False
+    if estoque<0:
+        return False
+    if categoria not in ['Magia', 'Eletrônicos']:
+        return False
+    elif cursor.fetchone() == None:
+        return False
+    cursor.execute('UPDATE Produtos SET nome=?, descricao=?, categoria=?, preco=?, estoque=? WHERE id=?', data)
+    conn.commit()
+    return 200
+
+def deleta_produto(id):
+    cursor.execute('SELECT * FROM Produtos WHERE id=?', (id,))
+    if cursor.fetchone() == None:
+        return False
+
+    cursor.execute('DELETE FROM Produtos WHERE id=?', (id,))
+    return 200
