@@ -43,9 +43,18 @@ def lista_usuarios():
 def atualiza_usuario(nome,idade,cpf,endereco,email,id):
     cursor.execute('SELECT * FROM Usuarios WHERE id=?', (id,))
     data = (nome, idade, cpf, endereco, email, id)
-    if cursor.fetchone() == None:
+    if 0>idade or 120<idade:
+        return False
+    
+    if len(cpf) != 11:
+        return False
+    
+    pos = email.find('@')
+    if email[:pos] == '' or email[pos+1:] == '':
+        return False
+
+    elif cursor.fetchone() == None:
         return False
     cursor.execute('UPDATE Usuarios SET nome=?, idade=?, cpf=?, endereco=?, email=? WHERE id=?', data)
-    return True
-
+    return 201
 
